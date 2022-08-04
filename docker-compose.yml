@@ -1,21 +1,32 @@
-version: '3'
+version: '3.5'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-13}-alpine
+  sf_task_db_postgres:
+    image: postgres:14-alpine
+    container_name: sf_task_db_postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
-      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+      POSTGRES_DB: 'sf_task'
+      POSTGRES_PASSWORD: 'sf_task'
+      POSTGRES_USER: 'sf_task'
+    ports:
+      - "5432:5432"
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - sf-task-database:/var/lib/postgresql/data:rw
+
+  sf_task_php81:
+    build:
+      dockerfile: ./.docker/dev/Dockerfile
+    image: php81_sf_task_local:latest
+    container_name: sf_task_container
+    ports:
+      - "8085:80"
+    volumes:
+      - ./.docker/dev/apache.conf:/etc/apache2/sites-enabled/000-default.conf
+      - .:/var/www:cached
+    depends_on:
+      - database
+    links:
+      - database
 
 volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+  sf-task-database:
