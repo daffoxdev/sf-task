@@ -15,6 +15,7 @@ services:
 
   sf_task_php81:
     build:
+      context: .
       dockerfile: ./.docker/dev/Dockerfile
     image: php81_sf_task_local:latest
     container_name: sf_task_container
