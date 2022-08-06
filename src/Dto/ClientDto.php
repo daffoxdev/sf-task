@@ -6,7 +6,7 @@ use App\Constant\Validator\Group;
 use Symfony\Component\Validator\Constraints as Assert;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
-class ClientDto
+class ClientDto implements DtoInterface
 {
     #[Assert\NotBlank(groups: [Group::CLIENT_EDIT])]
     private ?int $id = null;
