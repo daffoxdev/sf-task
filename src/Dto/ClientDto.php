@@ -9,19 +9,19 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumbe
 class ClientDto implements DtoInterface
 {
     #[Assert\NotBlank(groups: [Group::CLIENT_EDIT])]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[Assert\Length(min: 2, max: 32)]
-    private string $firstName;
+    public string $firstName;
 
     #[Assert\Length(min: 2, max: 32)]
-    private string $lastName;
+    public string $lastName;
 
     #[Assert\NotBlank]
     #[Assert\Email]
-    private string $email;
+    public string $email;
 
     #[Assert\NotBlank]
     #[AssertPhoneNumber]
-    private string $phoneNumber;
+    public string $phoneNumber;
 }

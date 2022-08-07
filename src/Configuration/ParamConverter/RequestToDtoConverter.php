@@ -9,9 +9,24 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RequestToDtoConverter implements ParamConverterInterface
 {
-    public function apply(Request $request, ParamConverter $configuration)
+    public function apply(Request $request, ParamConverter $configuration): bool
     {
-        // TODO: Implement apply() method.
+        $param = $configuration->getName();
+
+        $class = $configuration->getClass();
+
+        /** @var DtoInterface $object */
+        $object = new $class;
+
+        foreach ($request->toArray() as $property => $value) {
+            if (property_exists($object, $property)) {
+                $object->{$property} = $value;
+            }
+        }
+
+        $request->attributes->set($param, $object);
+
+        return true;
     }
 
     public function supports(ParamConverter $configuration): bool
