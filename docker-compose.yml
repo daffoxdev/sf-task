@@ -25,9 +25,9 @@ services:
       - ./.docker/dev/apache.conf:/etc/apache2/sites-enabled/000-default.conf
       - .:/var/www:cached
     depends_on:
-      - database
+      - sf_task_db_postgres
     links:
-      - database
+      - sf_task_db_postgres
 
 volumes:
   sf-task-database:

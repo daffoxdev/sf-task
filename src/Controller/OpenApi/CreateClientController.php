@@ -5,6 +5,7 @@ namespace App\Controller\OpenApi;
 use App\Constants\SerializerGroup;
 use App\Dto\ClientDto;
 use App\Repository\ClientRepository;
+use App\Service\Client\ClientFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,24 +20,26 @@ class CreateClientController extends AbstractController
 {
     #[Route(methods: 'post')]
     public function create(
-        Request $request,
         ClientDto $clientDto,
         SerializerInterface $serializer,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        ClientFactory $clientFactory
     ): JsonResponse {
-
         $violations = $validator->validate($clientDto);
+        $httpCode = Response::HTTP_OK;
 
-        $response = [
-            'client_dto' => $clientDto,
-            'violations' => $violations
-        ];
+        if ($violations->count()) {
+            $httpCode = Response::HTTP_BAD_REQUEST;
+            $responseData = $violations;
+        } else {
+            $responseData = $clientFactory->createFromDto($clientDto);
+        }
 
-        $json = $serializer->serialize($response, 'json', [
+        $json = $serializer->serialize($responseData, 'json', [
 //            'groups' => [SerializerGroup::AIRLINE_AUTOCOMPLETE_SEARCH]
         ]);
 
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+        return new JsonResponse($json, $httpCode, [], true);
     }
 
     #[Route(path: '{id}', methods: 'get')]
