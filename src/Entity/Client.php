@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
+#[ApiResource(
+
+)]
 class Client
 {
     #[ORM\Id]
@@ -32,6 +37,14 @@ class Client
     #[Assert\NotBlank]
     #[AssertPhoneNumber]
     private string $phoneNumber;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Notification::class, cascade: ['remove'])]
+    public iterable $notifications;
+
+    public function __construct()
+    {
+        $this->notifications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
