@@ -18,3 +18,7 @@ make bash bin/console doctrine:fixtures:load
 ```
 
 Go to `localhost:8085/api/docs`
+
+User to use API:
+username: api
+password: api
