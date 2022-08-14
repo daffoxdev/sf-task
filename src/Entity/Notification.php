@@ -14,8 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
     collectionOperations: ['get', 'post'],
     itemOperations: ['get'],
     attributes: [
+//        "security" => "is_granted('ROLE_PRIVATE_API')",
         'pagination_items_per_page' => 5,
-//        'filters' => 'notification.client.id'
     ],
     input: NotificationDto::class,
     output: NotificationDto::class
