@@ -2,17 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Dto\Notification\NotificationDto;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 #[ApiResource(
+    collectionOperations: ['get', 'post'],
     itemOperations: ['get'],
+    attributes: [
+        'pagination_items_per_page' => 5,
+//        'filters' => 'notification.client.id'
+    ],
     input: NotificationDto::class,
     output: NotificationDto::class
 )]
+#[ApiFilter(SearchFilter::class, properties: [
+    'client.id' => 'exact'
+])]
 class Notification
 {
     #[ORM\Id]
