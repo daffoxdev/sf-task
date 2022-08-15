@@ -7,6 +7,7 @@ use App\Constant\User\RoleConstant;
 use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -26,6 +27,8 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumbe
     denormalizationContext: ['groups' => ['write']],
     normalizationContext: ['groups' => ['read']],
 )]
+#[UniqueEntity('email')]
+#[UniqueEntity('phoneNumber')]
 class Client
 {
     #[ORM\Id]
@@ -45,13 +48,13 @@ class Client
     #[Groups(['read', 'write'])]
     private string $lastName;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
     #[Groups(['read', 'write'])]
     private string $email;
 
-    #[ORM\Column(length: 35)]
+    #[ORM\Column(length: 35, unique: true)]
     #[Assert\NotBlank]
     #[AssertPhoneNumber]
     #[Groups(['read', 'write'])]
