@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Constant\User\RoleConstant;
 use App\Dto\Notification\NotificationDto;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
     collectionOperations: ['get', 'post'],
     itemOperations: ['get'],
     attributes: [
-        "security" => "is_granted('ROLE_PRIVATE_API')",
+        "security" => "is_granted('" . RoleConstant::PRIVATE_API . "')",
         'pagination_items_per_page' => 5,
     ],
     input: NotificationDto::class,

@@ -5,7 +5,6 @@
 CONTAINER_NAME = sf_task_container
 DOCKER_COMPOSE = docker-compose
 PHP_CONTAINER_INTERACTIVE = docker exec -it ${CONTAINER_NAME}
-PHP_CONTAINER = docker exec ${CONTAINER_NAME}
 
 ##################
 # Docker compose
@@ -38,6 +37,3 @@ down:
 
 container:
 	${PHP_CONTAINER_INTERACTIVE} bash
-
-bash:
-	${PHP_CONTAINER} bash

@@ -10,12 +10,6 @@ security:
             entity:
                 class: App\Entity\ApiUser
                 property: username
-        api_users:
-            memory:
-                users:
-                    api:
-                        password: '$2y$13$CQ22P5vLN84nDf/R4V/cTe9Ot/Z7pGD.XsOJplCLOyFSe7xGR.Xra'
-                        roles: ['PUBLIC_ACCESS', 'ROLE_PRIVATE_API']
 
     firewalls:
         dev:
@@ -23,7 +17,7 @@ security:
             security: false
 
         main:
-            stateless: false
+            stateless: true
             provider: app_user_provider
             json_login:
                 check_path: /authentication_token
