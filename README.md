@@ -15,20 +15,26 @@ Technologies used:
 ```shell
 make up
 ```
+
+#### Go into container with code
+```shell
+make container
+```
+
 #### Run database migrations
 ```shell
-make bash bin/console d:m:migrate --no-interaction
+bin/console d:m:migrate --no-interaction
 ```
 
 #### Generate the SSL keys
 https://github.com/lexik/LexikJWTAuthenticationBundle/blob/2.x/Resources/doc/index.rst#generate-the-ssl-keys
 ```shell
-make bash bin/console lexik:jwt:generate-keypair
+bin/console lexik:jwt:generate-keypair
 ```
 
 #### Fill DB with some initial data
 ```shell
-make bash bin/console doctrine:fixtures:load
+bin/console doctrine:fixtures:load
 ```
 
 #### Fill free to test api via swagger ui or using postman
