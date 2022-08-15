@@ -16,9 +16,14 @@ Technologies used:
 make up
 ```
 
-#### Go into container with code
+#### Go into container
 ```shell
 make container
+```
+
+#### Install third-party dependencies
+```shell
+composer install
 ```
 
 #### Run database migrations
