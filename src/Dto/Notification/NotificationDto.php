@@ -5,22 +5,23 @@ namespace App\Dto\Notification;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Constant\Notification\ChannelConstant;
 use App\Constant\Validator\Group;
+use App\Validator\Constraints as AssertCustom;
 use App\Validator\Group\NotificationGroupGenerator;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
-    attributes: [
-        'validation_groups' => NotificationGroupGenerator::class
-    ],
-    denormalizationContext: ['groups' => ['write']],
-    normalizationContext: ['groups' => ['read']],
     collectionOperations: [
         'post' => [
             'validation_groups' => NotificationGroupGenerator::class
         ]
-    ]
+    ],
+    attributes: [
+        'validation_groups' => NotificationGroupGenerator::class
+    ],
+    denormalizationContext: ['groups' => ['write']],
+    normalizationContext: ['groups' => ['read']]
 )]
 class NotificationDto
 {
@@ -28,6 +29,7 @@ class NotificationDto
     public ?int $id = null;
 
     #[Assert\NotBlank]
+    #[AssertCustom\ClientIdConstraint]
     #[Groups(['read', 'write'])]
     public ?int $clientId = null;
 
