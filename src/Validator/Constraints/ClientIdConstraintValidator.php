@@ -26,10 +26,6 @@ class ClientIdConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!is_int($value)) {
-            throw new UnexpectedValueException($value, 'int');
-        }
-
         $client = $this->clientRepository->find($value);
 
         if (!$client) {

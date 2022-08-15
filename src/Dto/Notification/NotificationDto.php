@@ -9,6 +9,7 @@ use App\Validator\Constraints as AssertCustom;
 use App\Validator\Group\NotificationGroupGenerator;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -29,9 +30,10 @@ class NotificationDto
     public ?int $id = null;
 
     #[Assert\NotBlank]
+    #[Assert\Uuid]
     #[AssertCustom\ClientIdConstraint]
     #[Groups(['read', 'write'])]
-    public ?int $clientId = null;
+    public ?Uuid $clientId = null;
 
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ChannelConstant::VALUES)]
